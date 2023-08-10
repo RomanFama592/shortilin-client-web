@@ -1,0 +1,63 @@
+---
+export const prerender = false;
+
+import { secondsToDDHHMMSS } from "../utils";
+
+let response: any;
+try {
+  if (Astro.params.toRedirect !== "favicon.ico") {
+    response = await fetch(
+      `${process.env.URL_API}/get-url/${Astro.params.toRedirect}`
+    );
+    response = await response.json();
+  }
+} catch (err) {
+  console.log("err: ", err);
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Redirect to {new URL(response.url).hostname} < Shotilin</title>
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0" />
+  </head>
+  <body>
+    <div>
+      <h1>Redirect to {new URL(response.url).hostname} in</h1>
+      <h1 id="time"></h1>
+      <h1 id="url">{response.url}</h1>
+      <h1 id="expiresin">url expires in: {secondsToDDHHMMSS(response.expiresIn)}</h1>
+    </div>
+  </body>
+</html>
+
+<script>import { q } from "../../public/query-selector";
+  const timeInitial = 5;
+  let timeRemainder = timeInitial;
+
+  const url = q.$("#url").innerHTML;
+  const timeTo = q.$("#time");
+
+  timeTo.innerHTML = timeInitial + "s";
+
+  function downTimer() {
+    timeRemainder--;
+    timeTo.innerHTML = timeRemainder + "s";
+  }
+
+  if (url !== "") {
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      downTimer();
+      if (i >= timeInitial) {
+        window.location.assign(url)
+        clearInterval(interval)
+      };
+    }, 1000);
+  }
+</script>

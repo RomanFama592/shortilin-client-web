@@ -1,0 +1,17 @@
+{
+  "name": "client-web",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --host",
+    "start": "astro build && astro preview --host",
+    "build": "astro build",
+    "preview": "astro preview --host",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "5.3.2",
+    "astro": "^2.10.1",
+    "dotenv": "16.3.1"
+  }
+}

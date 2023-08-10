@@ -1,0 +1,27 @@
+---
+interface Props {
+  language?: string;
+  title?: string;
+}
+
+const { language, title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={language || "en"}>
+  <head>
+    <title>{title}{title ? " < " : null}Shotilin</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:inline>
+  body {
+    padding: 0%;
+    margin: 0%;
+  }
+</style>

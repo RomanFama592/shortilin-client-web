@@ -1,0 +1,7 @@
+/node_modules
+/.vscode
+/docs
+pnpm-lock.yaml
+package-lock.json
+README.md
+Dockerfile.*

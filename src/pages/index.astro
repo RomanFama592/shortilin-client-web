@@ -1,0 +1,40 @@
+---
+export const prerender = true;
+
+import Html from "../layouts/html.astro";
+---
+
+<Html>
+  <h1 id="title" data-urlextapi={process.env.URL_EXT_API}>Shortilin</h1>
+  <input id="url" type="text" placeholder="Url to shorting" />
+  <button id="buttonGetUrl">submit</button>
+  <a id="showUrl" href="/"></a>
+
+</Html>
+
+<script>import { q } from "../../public/query-selector";
+
+  async function getUrl() {
+    let response;
+    try {
+      response = await fetch(`${q.$("#title").dataset.urlextapi}/parser-url`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url: document.querySelector("#url").value }),
+      });
+      response = await response.json();
+
+      console.log(response)
+    } catch (err) {
+      document.querySelector("#showUrl").innerHTML = response.id;
+    }
+    document.querySelector("#showUrl").innerHTML = "<h1> link: " + window.location.host + "/" + response.id + " </h1>";
+    document.querySelector("#showUrl").href = "/" + response.id;
+  }
+
+  document.querySelector("#buttonGetUrl").addEventListener("click", getUrl);
+</script>
+
+<style></style>
