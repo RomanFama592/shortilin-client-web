@@ -5,36 +5,44 @@ import Html from "../layouts/html.astro";
 ---
 
 <Html>
-  <h1 id="title" data-urlextapi={process.env.URL_EXT_API}>Shortilin</h1>
+  <h1 id="title">Shortilin</h1>
   <input id="url" type="text" placeholder="Url to shorting" />
   <button id="buttonGetUrl">submit</button>
   <a id="showUrl" href="/"></a>
-
 </Html>
 
-<script>import { q } from "../../public/query-selector";
+<script>
+  import { q } from "../../public/query-selector";
+  const $showUrl = q.$("#showUrl")
+  const $url = q.$("#url")
 
   async function getUrl() {
     let response;
+    $showUrl.href = "/";
+
     try {
-      response = await fetch(`${q.$("#title").dataset.urlextapi}/parser-url`, {
+      response = await fetch(`${import.meta.env.PUBLIC_URL_API}/parser-url`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url: document.querySelector("#url").value }),
+        body: JSON.stringify({ url: $url.value }),
       });
       response = await response.json();
-
-      console.log(response)
     } catch (err) {
-      document.querySelector("#showUrl").innerHTML = response.id;
+      $showUrl.innerHTML = `<h1 style="color: red"> ERROR UNKNOWN </h1> </br> <h1> click for return home page </h1>`;
     }
-    document.querySelector("#showUrl").innerHTML = "<h1> link: " + window.location.host + "/" + response.id + " </h1>";
-    document.querySelector("#showUrl").href = "/" + response.id;
+
+    if (response.error) {
+      $showUrl.innerHTML = `<h1 style="color: red"> ERROR: ${response.error} </h1> </br> <h1> click for return home page </h1>`;
+    } else {
+      $showUrl.innerHTML =
+        "<h1> link: " + window.location.host + "/" + response.id + " </h1>";
+      $showUrl.href = "/" + response.id;
+    }
   }
 
-  document.querySelector("#buttonGetUrl").addEventListener("click", getUrl);
+  q.$("#buttonGetUrl").addEventListener("click", getUrl);
 </script>
 
 <style></style>
