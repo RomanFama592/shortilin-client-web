@@ -1,3 +1,5 @@
+import { load } from "cheerio"
+
 export function doubleZero(number) {
     if (number < 10) return "0" + number
     return number
@@ -10,4 +12,13 @@ export function secondsToDDHHMMSS(number) {
     let day = Math.trunc(number / 60 / 60 / 24 % 24)
 
     return `${doubleZero(day)}d ${doubleZero(hours)}:${doubleZero(min)}:${doubleZero(secs)}`
+}
+
+export async function getDataMeta(url, arrayPropertys) {
+    let response = await fetch(url)
+    response = await response.text()
+    const $ = load(response)
+    return arrayPropertys.map((item)=>{
+        return $(`meta[${item[0]}="${item[1]}"]`).attr("content")
+    })
 }

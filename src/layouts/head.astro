@@ -1,0 +1,14 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<head>
+    <title>{title}{title ? " < " : null}Shotilin</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8" />
+    <slot />
+</head>
