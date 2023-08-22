@@ -1,0 +1,21 @@
+#toUrl:hover {
+    color: var(--E-hover-color);
+    background-color: var(--E-primary-color);
+}
+
+#toUrl:active {
+    color: var(--E-hover-color);
+    background-color: var(--E-primary-color);
+}
+
+#toUrl:hover.error{
+    color: var(--E-primary-color);
+    background-color: var(--E-error-color);
+    outline: none;
+}
+
+#toUrl:active.error{
+    color: var(--E-error-color);
+    background-color: var(--E-primary-color);
+    outline: none;
+}

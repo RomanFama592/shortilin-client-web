@@ -1,0 +1,35 @@
+#urlInput {
+  color: var(--E-background-color);
+  background-color: var(--E-primary-color);
+  min-width: 200px;
+  max-width: 520px;
+  height: 45px;
+  padding: 0.7rem;
+  border-radius: 1rem;
+  transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-sizing: border-box;
+  text-align: center;
+  border: none;
+  outline: none;
+}
+
+:root.dark #urlInput{
+  color: var(--E-primary-color);
+  background-color: var(--E-background-color);
+}
+
+#urlInput:hover {
+  border: 2px solid var(--E-border-hover-color);
+}
+
+#urlInput:focus {
+  border: 2px solid var(--E-border-focus-color);
+}
+
+#urlInput:active {
+  transform: scale(0.95);
+}
+
+#urlInput::placeholder {
+  text-align: center;
+}

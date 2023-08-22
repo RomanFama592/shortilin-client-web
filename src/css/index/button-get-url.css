@@ -1,0 +1,52 @@
+#buttonGetUrl {
+  overflow: hidden;
+}
+
+#buttonGetUrl:hover {
+  background-color: var(--E-background-color);
+}
+
+#buttonGetUrl span:nth-child(6) {
+  position: relative;
+}
+
+
+#buttonGetUrl span:not(:nth-child(6)) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 30px;
+  width: 30px;
+  background-color: var(--E-hover-color);
+  border-radius: 50%;
+  transition: transform 600ms ease;
+}
+
+#buttonGetUrl:hover span:not(:nth-child(6)) {
+  transform: translate(-50%, -50%) scale(4);
+}
+
+#buttonGetUrl:active span:not(:nth-child(6)) {
+  background-color: var(--E-primary-color);
+}
+
+#buttonGetUrl span:nth-child(1) {
+  transform: translate(-3.3em, -4em);
+}
+
+#buttonGetUrl span:nth-child(2) {
+  transform: translate(-6em, 1.3em);
+}
+
+#buttonGetUrl span:nth-child(3) {
+  transform: translate(-.2em, 1.8em);
+}
+
+#buttonGetUrl span:nth-child(4) {
+  transform: translate(3.5em, 1.4em);
+}
+
+#buttonGetUrl span:nth-child(5) {
+  transform: translate(3.5em, -3.8em);
+}
