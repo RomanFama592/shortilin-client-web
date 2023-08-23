@@ -5,7 +5,18 @@ Frontend web project for the "Shortilin" service created with Astro using a hybr
 __you need to raise the backend api to fully use the page.__
 
 _the backend api repository:_
-* (URL GITHUB) **add url**
+- **https://github.com/RomanFama592/shortilin-backend-api**
+
+<br>
+
+
+## 📑 Contents:
+
+1. [👩‍💻 **Commands**](#👩‍💻-commands)
+2. [🐳 **Ready for Docker**](#🐳-ready-for-docker)
+3. [🚀 **Project Structure**](#🚀-project-structure)
+4. [👨‍⚖️ **License**](#👨‍⚖️-license)
+
 
 <br>
 
@@ -44,19 +55,25 @@ npm run preview
 <p align="right"><a href="#top">Back to top 🔼</a></p>
 <br>
 
-## 🐳 Using Docker
+## 🐳 Ready for Docker
 
 This project already includes a Dockerfile to create an image of itself using these commands:
 
 - Exposed port: 10000
 
-1. Create the project's image.
+1. Move to root of client.
+
+```sh
+cd client-web-shortilin
+```
+
+2. Create the project's image.
 
 ```sh
 docker build -t client-web-shortilin .
 ```
 
-2. Run a container based on that image.
+3. Run a container based on that image.
 
 ```sh
 docker run -p 9000:10000 client-web-shortilin
@@ -73,15 +90,28 @@ Inside of your Astro project, you'll see the following folders and files:
 /
 ├── public/
 │   ├── favicon.svg
+│   ├── image-meta-404.png
+│   ├── light-off.png
+│   ├── light-on.png
 │   └── query-selector.js
 ├── src/
+│   ├── components/
+│   │    └── header.astro
+│   ├── css/
+│   │    └── index/
+│   │         ├── button-get-url.css
+│   │         ├── div-loader.css
+│   │         ├── input-url.css
+│   │         └── link-to-url.css
 │   ├── layouts/
-│   │    └── html.astro
+│   │    └── head.astro
 │   ├── pages/
 │   │    ├── [toRedirect].astro
+│   │    ├── 404.astro
 │   │    └── index.astro
 │   └── utils.js
-└── package.json
+├── ...
+└── tsconfig.json
 ```
 
 <p align="right"><a href="#top">Back to top 🔼</a></p>
