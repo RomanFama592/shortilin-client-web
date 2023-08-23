@@ -1,63 +1,151 @@
 ---
 export const prerender = false;
 
-import { secondsToDDHHMMSS } from "../utils";
+import Header from "../components/header.astro";
+import Head from "../layouts/head.astro";
+import { getDataMeta } from "../utils";
 
-let response: any;
+let response: any = {}, hostname: any, arrayMeta: any;
+
 try {
-  if (Astro.params.toRedirect !== "favicon.ico") {
-    response = await fetch(
-      `${process.env.URL_API}/get-url/${Astro.params.toRedirect}`
-    );
-    response = await response.json();
+  const urlAPI = `${import.meta.env.URL_INT_API}/get-url/${Astro.params.toRedirect}`
+
+  response = await fetch(urlAPI);
+  response = await response.json();
+  
+  if(response.error){
+    throw new Error("ERROR API")
   }
+
+  hostname = new URL(response.url).hostname;
+  
+  arrayMeta = await getDataMeta(response.url)
 } catch (err) {
-  console.log("err: ", err);
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not Found'
+  })
+  //return Astro.redirect("/404" + Astro.url.pathname);
 }
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Redirect to {new URL(response.url).hostname} < Shotilin</title>
-
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="initial-scale=1.0" />
-  </head>
+  <Head title={hostname || ""}>
+    {arrayMeta?.map((item)=>(
+      <meta 
+        name={item[0] === "name" ? item[1] : ""}
+        property={item[0] === "property" ? item[1] : ""}
+        content={item[2]}
+      />
+      ))}
+  </Head>
   <body>
-    <div>
-      <h1>Redirect to {new URL(response.url).hostname} in</h1>
-      <h1 id="time"></h1>
-      <h1 id="url">{response.url}</h1>
-      <h1 id="expiresin">url expires in: {secondsToDDHHMMSS(response.expiresIn)}</h1>
+    <Header />
+    <div class="contenedor">
+      <h1>
+        Redirect to <span id="hostname">{hostname || "none"}</span> in <span id="time">5s</span>
+      </h1>
+      <h1>
+        <span id="url" class="light">
+          {response.url || "none"}
+        </span>
+      </h1>
+      <h1>
+        expires in:
+        <span id="expiresin" style="color: var(--E-error-color)">
+          {response.expiresIn || "none"}
+        </span>
+      </h1>
+      <br>
+      <button id="goTo" class="button-base">go to url now</button>
     </div>
   </body>
 </html>
 
-<script>import { q } from "../../public/query-selector";
-  const timeInitial = 5;
-  let timeRemainder = timeInitial;
+<script>
+    import { q } from "../../public/query-selector";
+    import { secondsToDDHHMMSS } from "../utils";
 
-  const url = q.$("#url").innerHTML;
-  const timeTo = q.$("#time");
+    const timeInitial = 10;
+    const url = q.$("#url").innerHTML;
+    const expireIn = Number(q.$("#expiresin").innerHTML);
+    const $timeTo = q.$("#time");
+    const $goTo = q.$("#goTo");
+    const $expireTime = q.$("#expiresin");
+    let timeRemainder = timeInitial;
+    let timeUpdateExpire = expireIn;
 
-  timeTo.innerHTML = timeInitial + "s";
+    function updateTimerDisplay() {
+      $timeTo.innerHTML = timeRemainder + "s";
+    }
 
-  function downTimer() {
-    timeRemainder--;
-    timeTo.innerHTML = timeRemainder + "s";
-  }
+    function updateTimerExpires() {
+      if(timeUpdateExpire > 0 && typeof timeUpdateExpire === "number"){
+        $expireTime.innerHTML = secondsToDDHHMMSS(timeUpdateExpire);
+      } else{
+        $expireTime.innerHTML = "EXPIRED"
+      }
+    }
 
-  if (url !== "") {
-    let i = 0;
-    const interval = setInterval(() => {
-      i++;
-      downTimer();
-      if (i >= timeInitial) {
-        window.location.assign(url)
-        clearInterval(interval)
-      };
-    }, 1000);
-  }
+    function downTimer(timeDown: boolean = true) {
+      if(timeDown){
+        timeRemainder--;
+        timeUpdateExpire--;
+      }
+      updateTimerDisplay();
+      updateTimerExpires()
+    }
+
+    downTimer(false)
+
+    if (url !== "none") {
+      let i = 0;
+      const interval = setInterval(() => {
+        i++;
+        downTimer();
+        if (i >= timeInitial) {
+          clearInterval(interval);
+          window.location.assign(url);
+        }
+      }, 1000);
+    } else {
+      window.location.replace("/");
+    }
+    
+    $goTo.addEventListener("click", ()=>{
+      window.location.assign(url);
+    })
 </script>
+
+<style>
+  
+.contenedor {
+  text-align: center;
+  width: 100vw;
+  text-size-adjust: auto;
+}
+
+#hostname{
+  font-weight: bolder;
+}
+
+html.light #hostname{
+  color:var(--E-background-color)
+}
+
+html.dark #hostname{
+  color:var(--E-border-hover-color)
+}
+
+#url{
+  color: var(--E-hover-color);
+  margin: 1rem;
+}
+
+#goTo{
+  font-size: large;
+  border-radius: 1.3rem;
+  padding: 1.3rem;
+}
+
+</style>

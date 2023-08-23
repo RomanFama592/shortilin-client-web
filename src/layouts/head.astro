@@ -1,0 +1,134 @@
+---
+interface Props {
+  title?: string;
+  languaje?: string;
+}
+
+const { title, languaje } = Astro.props;
+---
+
+<html lang={languaje || "en"} class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}{title ? " < " : null}Shotilin</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" />
+    <slot />
+    <script is:inline>
+      if (window.localStorage.getItem("theme") === "dark") {
+        document.documentElement.className = "dark";
+      }
+    </script>
+  </head>
+</html>
+
+<style is:global>
+  .light {
+    /* variables of body */
+    --B-primary-color: #171717;
+    --B-background-color: #ededed;
+
+    /* variables of elements */
+    --E-primary-color: #dedede;
+    --E-background-color: #151515;
+    --E-hover-color: #0c66ed;
+    --E-error-color: #e61f47;
+    --E-border-hover-color: #bfbfbf;
+    --E-border-focus-color: #808080;
+  }
+
+  .dark {
+    /* variables of body */
+    --B-primary-color: #c9c9c9;
+    --B-background-color: #1c1c1c;
+
+    /* variables of elements */
+    --E-primary-color: #c9c9c9;
+    --E-background-color: #292929;
+    --E-hover-color: #000000;
+    --E-error-color: #de3c3c;
+    --E-border-hover-color: #808080;
+    --E-border-focus-color: #bfbfbf;
+  }
+
+  * {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
+    padding: 0%;
+    margin: 0%;
+  }
+
+  body {
+    color: var(--B-primary-color);
+    background-color: var(--B-background-color);
+  }
+
+  .contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10vh;
+    gap: 20px;
+  }
+
+  .button-base {
+    position: relative;
+    color: var(--E-primary-color);
+    background-color: var(--E-background-color);
+    padding: 0.8em 1.5em;
+    border: none;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all 0.2s;
+  }
+
+  .button-base:hover {
+    color: var(--E-primary-color);
+    background-color: var(--E-hover-color);
+    outline: var(--E-border-hover-color) solid 2px;
+  }
+
+  .button-base:active {
+    transform: scale(0.85, 1.15);
+    color: var(--E-background-color);
+    background-color: var(--E-primary-color);
+    outline: var(--E-border-focus-color) solid 2px;
+  }
+
+  .tooltip {
+    visibility: hidden;
+    position: absolute;
+    color: var(--E-primary-color);
+    background-color: var(--E-background-color);
+    bottom: 110%;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .tooltip:after {
+    content: "";
+    position: absolute;
+    top: 95%;
+    left: 10%;
+    border-top: 5px solid var(--E-background-color);
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid transparent;
+  }
+
+  .devanish {
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+  }
+
+  .error {
+    color: var(--E-error-color);
+  }
+</style>

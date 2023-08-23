@@ -1,7 +1,11 @@
-/node_modules
-/.vscode
+/dist
 /docs
+/.vscode
+/node_modules
+.gitignore
+.env.example
+.gitignore.example
+README.md
+Dockerfile
 pnpm-lock.yaml
 package-lock.json
-README.md
-Dockerfile.*

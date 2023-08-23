@@ -1,40 +1,152 @@
 ---
 export const prerender = true;
 
-import Html from "../layouts/html.astro";
+import "../css/index/input-url.css";
+import "../css/index/link-to-url.css";
+import "../css/index/button-get-url.css";
+import "../css/index/div-loader.css";
+import Head from "../layouts/head.astro";
+import Header from "../components/header.astro";
 ---
+{/*TODO: add selector of dark mode*/}
+<!DOCTYPE html>
+  <Head />
+  <body>
+    <Header />
+    <div class="contenedor">
+      <input id="urlInput" type="text" placeholder="Url to shorting" />
+      <button class="button-base" id="buttonGetUrl">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span>Submit</span>
+      </button>
+      <div class="contenedor" id="contenedorUrl">
+        <a class="button-base" id="toUrl" href="/"></a>
+        <button class="button-base" id="copyUrl">
+          <svg 
+            style="height: 20px; width: 20px;"
+            viewBox="0 0 1024 1024" 
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M768 832a128 128 0 0 1-128 128H192A128 128 0 0 1 64 832V384a128 128 0 0 1 128-128v64a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64h64z"/>
+            <path fill="currentColor" d="M384 128a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64V192a64 64 0 0 0-64-64H384zm0-64h448a128 128 0 0 1 128 128v448a128 128 0 0 1-128 128H384a128 128 0 0 1-128-128V192A128 128 0 0 1 384 64z"/>
+          </svg>
+          <span class="tooltip"></span>
+        </button>
+      </div>
+      <div id="conteinerLoader" class="loader">
+        <div class="justify-content-center jimu-primary-loading"></div>
+      </div>
+    </div>
+  </body>
+</html>
 
-<Html>
-  <h1 id="title" data-urlextapi={process.env.URL_EXT_API}>Shortilin</h1>
-  <input id="url" type="text" placeholder="Url to shorting" />
-  <button id="buttonGetUrl">submit</button>
-  <a id="showUrl" href="/"></a>
+<script> 
+  import { q } from "../../public/query-selector";
+  const $url = q.$("#urlInput");
+  const $toUrl = q.$("#toUrl");
+  const $contenedorUrl = q.$("#contenedorUrl");
+  const $conteinerLoader = q.$("#conteinerLoader");
 
-</Html>
+  function updateSizeInput(){
+    $url.style.width = (($url.value.length + 1) * 4) + 'px';
+  }
 
-<script>import { q } from "../../public/query-selector";
+  function callTooltip(msg: string, tooltipElement, color?: string){
+    let colorO = tooltipElement.style.color
+    tooltipElement.innerHTML = msg
+    color ? tooltipElement.style.color = color : null
+    tooltipElement.style.visibility = "visible"
+    setTimeout(()=>{
+      tooltipElement.classList.add("devanish")
+      setTimeout(()=>{
+        tooltipElement.style.visibility = "hidden"
+        tooltipElement.classList.remove("devanish")
+        color ? tooltipElement.style.color = colorO : null
+      }, 500)
+    }, 1000)
+  }
+  
+  function changetoUrl(obj?: object){
+    const defaultValues = {
+      text: "",
+      url: "",
+      error: false,
+      visibility: "hidden",
+      ...obj,
+    }
 
+    $toUrl.innerHTML = defaultValues.text;
+    $toUrl.href = "/" + defaultValues.url;
+    
+    $contenedorUrl.style.visibility = defaultValues.visibility
+    
+    if(defaultValues.visibility === "hidden"){
+      $conteinerLoader.style.visibility = "visible"
+    } else{
+      $conteinerLoader.style.visibility = "hidden"
+    }
+
+    if(defaultValues.error){
+      $toUrl.classList.add("error")
+    } else{
+      $toUrl.classList.remove("error")
+    }
+    
+    if(defaultValues.url){
+      $toUrl.title = window.location.href + defaultValues.url
+    } else{
+      $toUrl.title = ""
+    }
+    
+  }
+
+  // TODO: Insert url in conteinerUrl with a span
   async function getUrl() {
     let response;
+    changetoUrl()
+    
     try {
-      response = await fetch(`${q.$("#title").dataset.urlextapi}/parser-url`, {
+      response = await fetch(`${import.meta.env.PUBLIC_URL_API}/parser-url`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url: document.querySelector("#url").value }),
+        body: JSON.stringify({ url: $url.value }),
       });
+      
       response = await response.json();
-
-      console.log(response)
     } catch (err) {
-      document.querySelector("#showUrl").innerHTML = response.id;
+      return changetoUrl({text: "ERROR: SERVER", error: true, visibility: "visible"})
     }
-    document.querySelector("#showUrl").innerHTML = "<h1> link: " + window.location.host + "/" + response.id + " </h1>";
-    document.querySelector("#showUrl").href = "/" + response.id;
+    
+    if (response.error) {
+      return changetoUrl({text: `ERROR: ${response.error}`, error: true, visibility: "visible"});
+    }
+    
+    return changetoUrl({text: window.location.origin + "/" + response.id, url: response.id, visibility: "visible"} )
   }
 
-  document.querySelector("#buttonGetUrl").addEventListener("click", getUrl);
+  $url.addEventListener("input", updateSizeInput)
+  q.$("#buttonGetUrl").addEventListener("click", getUrl);
+  q.$("#copyUrl").addEventListener("click", ()=>{
+    const $tooltip = q.$(".tooltip", q.$("#copyUrl"))
+      if(navigator.clipboard && $toUrl.title !== ""){
+        navigator.clipboard.writeText($toUrl.title)
+        callTooltip("copy to clipboard", $tooltip)
+      } else{
+        callTooltip("error when trying to copy in clipboard", $tooltip, "var(--E-error-color)")
+      }
+  });
 </script>
 
-<style></style>
+<style>
+#contenedorUrl{
+  visibility: hidden;
+  flex-direction: row;
+  margin-top: 1%;
+}
+
+</style>

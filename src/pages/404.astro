@@ -1,0 +1,45 @@
+---
+export const prerender = true;
+
+import Head from "../layouts/head.astro";
+import Header from "../components/header.astro";
+//FIXME: it doesn´t work when i build it
+---
+
+<!DOCTYPE html>
+<Head title="404 not found">
+  <meta property="og:title" content="No exists" />
+  <meta property="og:image" content="/image-meta-404.png" />
+</Head>
+<body>
+  <Header />
+  <div class="contenedor">
+    <h1>"<span id="pathname"></span>" does not exist or expires</h1>
+    <a class="button-base" href="/">Return to home</a>
+  </div>
+</body>
+
+<script>
+  import { q } from "../../public/query-selector";
+  
+  const partToRemove = "/404";
+  const $pathname = q.$("#pathname");
+  let url = window.location.href;
+
+  if (url.includes(partToRemove)) {
+    url = url.replace(partToRemove, "");
+    window.history.replaceState({}, document.title, url);
+  }
+
+  $pathname.innerHTML = new URL(url).pathname;
+</script>
+
+<style>
+  .contenedor {
+    text-align: center;
+  }
+
+  #pathname {
+    color: var(--E-error-color);
+  }
+</style>
