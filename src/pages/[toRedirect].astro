@@ -5,7 +5,7 @@ import Header from "../components/header.astro";
 import Head from "../layouts/head.astro";
 import { getDataMeta } from "../utils";
 
-let response: any = {}, hostname: any, arrayMeta: any;
+let response: any = {}, hostname: any, tagsMeta: any;
 
 try {
   const urlAPI = `${import.meta.env.URL_INT_API}/get-url/${Astro.params.toRedirect}`
@@ -19,7 +19,7 @@ try {
 
   hostname = new URL(response.url).hostname;
   
-  arrayMeta = await getDataMeta(response.url)
+  tagsMeta = await getDataMeta(response.url)
 } catch (err) {
   return Astro.redirect("/404" + Astro.url.pathname);
 }
@@ -27,13 +27,7 @@ try {
 
 <!DOCTYPE html>
   <Head title={hostname || ""}>
-    {arrayMeta?.map((item)=>(
-      <meta 
-        name={item[0] === "name" ? item[1] : ""}
-        property={item[0] === "property" ? item[1] : ""}
-        content={item[2]}
-      />
-      ))}
+    <Fragment set:html={tagsMeta}>
   </Head>
   <body>
     <Header />

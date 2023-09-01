@@ -29,13 +29,9 @@ export async function getDataMeta(url) {
     let response = await fetch(url)
     response = await response.text()
     const $ = load(response)
-    return listMetadataToGet
-        .map((item) => {
-            let content = $(`meta[${item[0]}="${item[1]}"]`).attr("content")
-            if (content !== undefined) {
-                return [item[0], item[1], content]
-            }
-            return null
-        })
-        .filter((item) => item !== null)
+    let textMeta = ""
+    $("head meta").each((_, el) => {
+        if (!$(el).prop("http-equiv")) textMeta += $(el).html(this) + "\n"
+    })
+    return textMeta
 }
