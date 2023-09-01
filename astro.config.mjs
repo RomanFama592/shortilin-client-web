@@ -1,19 +1,14 @@
 import { defineConfig } from 'astro/config';
-import node from "@astrojs/node";
+import vercel from "@astrojs/vercel"
 
 import compressor from "astro-compressor";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
+  output: "server",
   srcDir: "./src",
   publicDir: "./public",
-  server: {
-    port: 10000
-  },
-  adapter: node({
-    mode: "standalone"
-  }),
+  adapter: vercel(),
   integrations: [compressor({
     gzip: true,
     brotli: true
