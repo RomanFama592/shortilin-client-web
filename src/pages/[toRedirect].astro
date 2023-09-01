@@ -21,11 +21,7 @@ try {
   
   arrayMeta = await getDataMeta(response.url)
 } catch (err) {
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not Found'
-  })
-  //return Astro.redirect("/404" + Astro.url.pathname);
+  return Astro.redirect("/404" + Astro.url.pathname);
 }
 ---
 
