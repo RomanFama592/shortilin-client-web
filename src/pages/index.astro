@@ -128,6 +128,7 @@ import Header from "../components/header.astro";
     return changetoUrl({text: window.location.origin + "/" + response.id, url: response.id, visibility: "visible"} )
   }
 
+  updateSizeInput()
   $url.addEventListener("input", updateSizeInput)
   q.$("#buttonGetUrl").addEventListener("click", getUrl);
   q.$("#copyUrl").addEventListener("click", ()=>{
