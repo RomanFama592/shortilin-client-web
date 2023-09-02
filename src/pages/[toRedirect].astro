@@ -20,6 +20,7 @@ try {
   hostname = new URL(response.url).hostname;
   
   tagsMeta = await getDataMeta(response.url)
+  console.log({tagsMeta, response})
 } catch (err) {
   return Astro.redirect("/404" + Astro.url.pathname);
 }
