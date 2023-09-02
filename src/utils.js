@@ -28,6 +28,7 @@ export async function getDataMeta(url) {
 
     let response = await fetch(url)
     response = await response.text()
+    console.log({response})
     const $ = load(response)
     let textMeta = ""
     $("head meta").each((_, el) => {
