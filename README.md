@@ -9,6 +9,9 @@ _the backend api repository:_
 
 <br>
 
+**check demo in <a href="https://shtilin.vercel.app/">Shtilin</a>**
+
+<br>
 
 ## 📑 Contents
 
@@ -136,14 +139,7 @@ Inside of your Astro project, you'll see the following folders and files:
 │  │  └── index.astro
 │  ├── env.d.ts
 │  └── utils.js
-├── .dockerignore
-├── .env.example
-├── Dockerfile
-├── LICENSE
-├── README.md
-├── astro.config.mjs
-├── package.json
-├── postcss.config.cjs
+├── ...
 └── tsconfig.json
 ```
 
