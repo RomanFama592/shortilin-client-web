@@ -12,11 +12,12 @@ _the backend api repository:_
 
 ## 📑 Contents
 
-1. [✍ **Features**](#✍-features)
-1. [👩‍💻 **Commands**](#👩‍💻-commands)
-2. [🐳 **Ready for Docker**](#🐳-ready-for-docker)
-3. [🚀 **Project Structure**](#🚀-project-structure)
-4. [👨‍⚖️ **License**](#👨‍⚖️-license)
+1. [✍ **Features**](#-features)
+1. [👩‍💻 **Commands**](#-commands)
+2. [🐳 **Ready for Docker**](#-ready-for-docker)
+3. [👋 **Contributors**](#-contributors)
+3. [🚀 **Project Structure**](#-project-structure)
+4. [👨‍⚖️ **License**](#-license)
 
 
 <br>
@@ -25,7 +26,6 @@ _the backend api repository:_
 
 - _generate shortened URLs on its main page_
 - _by adding the ID, it performs redirection using an intermediate screen and a waiting time to display the complete URL_
-- _thanks to SSR, the redirection page copies all metadata from the target page, allowing the preview of thumbnails and other information before entering_
 - _the page has a general dark mode that is saved in the local storage to always remember your choice_
 - _it includes a custom 404 error page_
 
@@ -89,6 +89,15 @@ docker build -t client-web-shortilin .
 ```sh
 docker run -p 9000:10000 client-web-shortilin
 ```
+
+<p align="right"><a href="#top">Back to top 🔼</a></p>
+<br>
+
+## 👋 Contributors
+
+<a href="https://github.com/RomanFama592/shortilin-client-web/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=RomanFama592/shortilin-client-web&columns=6" />
+</a>
 
 <p align="right"><a href="#top">Back to top 🔼</a></p>
 <br>
