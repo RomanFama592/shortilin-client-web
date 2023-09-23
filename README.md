@@ -15,11 +15,13 @@ _the backend api repository:_
 
 ## 📑 Contents
 
-1. <a href="#✍-features">✍ **Features**</a>
-2. <a href="#👩‍💻-commands">👩‍💻 **Commands**</a>
-3. <a href="#🐳-ready-for-docker">🐳 **Ready for Docker**</a>
-4. <a href="#🚀-project-structure">🚀 **Project Structure**</a>
-5. <a href="#👨‍⚖️-license">👨‍⚖️ **License**</a>
+1. [✍ **Features**](#-features)
+1. [👩‍💻 **Commands**](#-commands)
+2. [🐳 **Ready for Docker**](#-ready-for-docker)
+3. [👋 **Contributors**](#-contributors)
+3. [🚀 **Project Structure**](#-project-structure)
+4. [👨‍⚖️ **License**](#-license)
+
 
 <br>
 
@@ -90,6 +92,15 @@ docker build -t client-web-shortilin .
 ```sh
 docker run -p 9000:10000 client-web-shortilin
 ```
+
+<p align="right"><a href="#top">Back to top 🔼</a></p>
+<br>
+
+## 👋 Contributors
+
+<a href="https://github.com/RomanFama592/shortilin-client-web/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=RomanFama592/shortilin-client-web&columns=6" />
+</a>
 
 <p align="right"><a href="#top">Back to top 🔼</a></p>
 <br>
