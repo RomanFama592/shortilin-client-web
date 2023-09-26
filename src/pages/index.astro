@@ -1,58 +1,70 @@
 ---
 export const prerender = true;
 
-import "../css/index/input-url.css";
-import "../css/index/link-to-url.css";
-import "../css/index/button-get-url.css";
-import "../css/index/div-loader.css";
 import Head from "../layouts/head.astro";
 import Header from "../components/header.astro";
+import HeaderInfo from "../components/HeaderInfo.astro";
 ---
 
 <!DOCTYPE html>
   <Head />
-  <body>
+  <body >
+    <main>
     <Header />
-    <div class="contenedor">
-      <input id="urlInput" type="text" placeholder="Url to shorting" />
-      <button class="button-base" id="buttonGetUrl">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span>Submit</span>
-      </button>
-      <div class="contenedor" id="contenedorUrl">
-        <a class="button-base" id="toUrl" href="/"></a>
-        <button class="button-base" id="copyUrl">
-          <svg 
-            style="height: 20px; width: 20px;"
-            viewBox="0 0 1024 1024" 
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill="currentColor" d="M768 832a128 128 0 0 1-128 128H192A128 128 0 0 1 64 832V384a128 128 0 0 1 128-128v64a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64h64z"/>
-            <path fill="currentColor" d="M384 128a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64V192a64 64 0 0 0-64-64H384zm0-64h448a128 128 0 0 1 128 128v448a128 128 0 0 1-128 128H384a128 128 0 0 1-128-128V192A128 128 0 0 1 384 64z"/>
-          </svg>
-          <span class="tooltip"></span>
-        </button>
-      </div>
+    <HeaderInfo />
+    <div class="contenedor text-white w-full">
+      <section class="flex gap-4 justify-center items-center">
+        <button id="buttonGetUrl" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+        <input class="border border-gray-300 bg-transparent rounded-lg py-2 px-4 focus:outline-none focus:border-indigo-500" id="urlInput" type="text" placeholder="URL to shorting">
+        <div class="contenedor" id="contenedorUrl">
+          <a class="button-base" id="toUrl" href="/"></a>
+          <button class="button-base" id="copyUrl">
+            <svg 
+              style="height: 20px; width: 20px;"
+              viewBox="0 0 1024 1024" 
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M768 832a128 128 0 0 1-128 128H192A128 128 0 0 1 64 832V384a128 128 0 0 1 128-128v64a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64h64z"/>
+              <path fill="currentColor" d="M384 128a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64V192a64 64 0 0 0-64-64H384zm0-64h448a128 128 0 0 1 128 128v448a128 128 0 0 1-128 128H384a128 128 0 0 1-128-128V192A128 128 0 0 1 384 64z"/>
+            </svg>
+            <span class="tooltip"></span>
+          </button>
+        </div>
+   
+      </section>
+      
       <div id="conteinerLoader" class="loader">
         <div class="justify-content-center jimu-primary-loading"></div>
       </div>
     </div>
+  </main>
   </body>
 </html>
 
 <script> 
+
+  localStorage.clear()
+
   import { q } from "../../public/query-selector";
   const $url = q.$("#urlInput");
   const $toUrl = q.$("#toUrl");
   const $contenedorUrl = q.$("#contenedorUrl");
   const $conteinerLoader = q.$("#conteinerLoader");
 
-  function updateSizeInput(){
-    $url.style.width = (($url.value.length + 1) * 4) + 'px';
+  // function updateSizeInput(){
+  //   $url.style.width = (($url.value.length + 1) * 4) + 'px';
+  // }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log($url.value);
+    // if () {
+    //   q.$("#buttonGetUrl").disabled = false;
+    //         } else {
+    //           q.$("#buttonGetUrl").disabled = true;
+    //         }
+          
   }
+  )
+
 
   function callTooltip(msg: string, tooltipElement, color?: string){
     let colorO = tooltipElement.style.color
@@ -104,6 +116,11 @@ import Header from "../components/header.astro";
   }
 
   async function getUrl() {
+
+
+    
+
+
     let response;
     changetoUrl()
     
@@ -128,8 +145,8 @@ import Header from "../components/header.astro";
     return changetoUrl({text: window.location.origin + "/" + response.id, url: response.id, visibility: "visible"} )
   }
 
-  updateSizeInput()
-  $url.addEventListener("input", updateSizeInput)
+  // updateSizeInput()
+  // $url.addEventListener("input", updateSizeInput)
   q.$("#buttonGetUrl").addEventListener("click", getUrl);
   q.$("#copyUrl").addEventListener("click", ()=>{
     const $tooltip = q.$(".tooltip", q.$("#copyUrl"))
@@ -143,10 +160,24 @@ import Header from "../components/header.astro";
 </script>
 
 <style>
-#contenedorUrl{
-  visibility: hidden;
-  flex-direction: row;
-  margin-top: 1%;
-}
 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+ 
+
+  body {
+    background-color: #090B11;
+    padding: 1.5rem;
+    width: 100%;
+  }
+
+  main {
+    width: 90%;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
 </style>
