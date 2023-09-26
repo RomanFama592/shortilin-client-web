@@ -1,38 +1,15 @@
 ---
 ---
 
-<header class="header">
-  <svg
-    id="shorts"
-    fill="currentColor"
-    version="1.1"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    viewBox="0 0 460.084 460.084"
-    xml:space="preserve"
-  >
-    <path
-      d="M459.728,305.743L399.612,86.299c-0.7-2.558-2.39-4.733-4.693-6.046c-2.305-1.313-5.037-1.657-7.595-0.957
- c-102.894,28.193-211.669,28.193-314.563,0c-2.558-0.7-5.29-0.358-7.594,0.957c-2.304,1.313-3.993,3.488-4.693,6.046L0.356,305.743
- c-1.163,4.243,0.585,8.748,4.305,11.097c60.058,37.928,129.357,60.158,200.405,64.284c4.732,0.287,8.977-2.787,10.225-7.341
- l14.751-53.844l14.752,53.845c1.196,4.365,5.161,7.357,9.64,7.357c0.193,0,0.389-0.005,0.585-0.017
- c71.048-4.126,140.347-26.356,200.404-64.284C459.143,314.491,460.89,309.986,459.728,305.743z M77.142,101.15
- c100.248,25.719,205.551,25.719,305.802,0l5.542,20.232c-103.85,26.957-213.036,26.957-316.887,0L77.142,101.15z M66.315,140.671
- c2.754,0.716,5.513,1.407,8.274,2.087L29.241,308.303c-2.554-1.47-5.097-2.96-7.62-4.488L66.315,140.671z M239.687,279.452
- c-1.191-4.345-5.14-7.357-9.645-7.357s-8.454,3.013-9.645,7.358l-22.234,81.156c-52.601-4.126-104.012-18.656-150.87-42.51
- l46.803-170.857c44.792,9.567,90.367,14.372,135.945,14.372c45.578,0,91.152-4.805,135.943-14.372l46.803,170.857
- c-46.857,23.853-98.267,38.383-150.868,42.509L239.687,279.452z M430.843,308.304l-45.349-165.546
- c2.762-0.679,5.522-1.371,8.276-2.087l44.693,163.144C435.941,305.343,433.397,306.833,430.843,308.304z"
-    ></path>
-  </svg>
-  <h1>
+<header class="header bg-slate-800 p-4 rounded-xl h-16 flex justify-between items-center" >
+
+ 
+  <h2 class="text-white text-2xl hover:text-slate-200">
     <a id="title" href="/">Shortilin</a>
-  </h1>
-  <label class="switch">
-    <input type="checkbox" checked />
-    <img src="/light-on.png" class="on" />
-    <img src="/light-off.png" class="off" />
-  </label>
+  </h2>
+  
+  <a href="" class="text-white hover:text-yellow-300 p-3 bg-blue-800 rounded-lg uppercase text-xs">Visitar proyecto 🚀</a>
+
 </header>
 
 <script>
@@ -56,92 +33,9 @@
   });
 </script>
 
+
 <style>
-  .header {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-    justify-content: space-around;
-    margin-top: 1rem;
-    margin-inline: 0.2rem;
-  }
-  
-  #shorts {
-    color: var(--B-primary-color);
-    height: 2rem;
-    width: 2rem;
-  }
-
-  #title{
-    color: var(--B-primary-color);
-    text-decoration: none;
-  }
-
-  .switch {
-    font-size: ;
-    position: relative;
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .switch input {
-    opacity: 1;
-    width: 0;
-    height: 0;
-  }
-  
-  .off {
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    width: 100%;
-    image-rendering: pixelated;
-    opacity: 1;
-    z-index: 0;
-  }
-  
-  .on {
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    width: 100%;
-    image-rendering: pixelated;
-    transition: opacity 200ms ease-out;
-    opacity: 0;
-    z-index: 1;
-    filter: drop-shadow(0 0 1rem #ffa13d);
-  }
-  
-  .switch input:checked ~ .on {
-    animation: titileoAnimacion 350ms 2 alternate ease-in;
-    opacity: 1;
-  }
-
-  @keyframes titileoAnimacion {
-    0%, 50% {
-      opacity: 0;
-    }
-    30% {
-      opacity: 0.2;
-    }
-    
-    80% {
-      opacity: 0.8;
-    }
-    
-    100% {
-      opacity: 0.8 
-    }
+   h2, a {
+    font-family: 'Kanit', sans-serif;
   }
 </style>
